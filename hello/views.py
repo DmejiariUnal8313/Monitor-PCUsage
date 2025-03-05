@@ -33,6 +33,7 @@ def monitor(request):
         'min_cpu_usage': analysis['min_cpu_usage'],
         'min_memory_usage': analysis['min_memory_usage'],
         'min_energy_usage': analysis['min_energy_usage'],
+        'execution_time': analysis['execution_time'],
     }
     
     return render(request, 'hello/monitor.html', context)
