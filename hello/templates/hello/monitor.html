@@ -1,0 +1,10 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+    Monitor de Recursos
+{% endblock %}
+{% block content %}
+    <h2>Uso de Recursos</h2>
+    <p>Uso de CPU: {{ cpu_usage }}%</p>
+    <p>Uso de Memoria: {{ memory_usage }}%</p>
+    <p>Uso de Energía: {{ energy_usage }}%</p>
+{% endblock %}
