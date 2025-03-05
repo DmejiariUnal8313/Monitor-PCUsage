@@ -4,7 +4,14 @@
 {% endblock %}
 {% block content %}
     <h2>Uso de Recursos</h2>
-    <p>Uso de CPU: {{ cpu_usage }}%</p>
-    <p>Uso de Memoria: {{ memory_usage }}%</p>
-    <p>Uso de Energía: {{ energy_usage }}%</p>
+    <p>Uso de CPU Promedio: {{ cpu_usage }}%</p>
+    <p>Uso de Memoria Promedio: {{ memory_usage }}%</p>
+    <p>Uso de Energía Promedio: {{ energy_usage }}%</p>
+    <p>Uso Máximo de CPU: {{ max_cpu_usage }}%</p>
+    <p>Uso Máximo de Memoria: {{ max_memory_usage }}%</p>
+    <p>Uso Máximo de Energía: {{ max_energy_usage }}%</p>
+    <p>Uso Mínimo de CPU: {{ min_cpu_usage }}%</p>
+    <p>Uso Mínimo de Memoria: {{ min_memory_usage }}%</p>
+    <p>Uso Mínimo de Energía: {{ min_energy_usage }}%</p>
+    <p>Tiempo de Ejecución: {{ execution_time }} segundos</p>
 {% endblock %}

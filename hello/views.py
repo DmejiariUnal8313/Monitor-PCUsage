@@ -20,16 +20,21 @@ def about(request):
     return render(request, "hello/about.html")
 
 def monitor(request):
-    monitoring_service = MonitoringService()
-    cpu_usage = monitoring_service.get_cpu_usage()
-    memory_usage = monitoring_service.get_memory_usage()
-    energy_usage = monitoring_service.get_energy_usage()
-
+    service = MonitoringService()
+    analysis = service.analyze_usage(duration=60, interval=5)
+    
     context = {
-        'cpu_usage': cpu_usage,
-        'memory_usage': memory_usage,
-        'energy_usage': energy_usage,
+        'cpu_usage': analysis['avg_cpu_usage'],
+        'memory_usage': analysis['avg_memory_usage'],
+        'energy_usage': analysis['avg_energy_usage'],
+        'max_cpu_usage': analysis['max_cpu_usage'],
+        'max_memory_usage': analysis['max_memory_usage'],
+        'max_energy_usage': analysis['max_energy_usage'],
+        'min_cpu_usage': analysis['min_cpu_usage'],
+        'min_memory_usage': analysis['min_memory_usage'],
+        'min_energy_usage': analysis['min_energy_usage'],
     }
+    
     return render(request, 'hello/monitor.html', context)
 
 # Add this code elsewhere in the file:
