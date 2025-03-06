@@ -10,10 +10,15 @@
         <input type="text" id="query" name="query" required>
         <button type="submit">Enviar</button>
     </form>
+    <form method="post" style="margin-top: 10px;">
+        {% csrf_token %}
+        <button type="submit" name="clear">Limpiar Consultas</button>
+    </form>
 
     {% if results %}
         {% for result in results %}
             <h3>Consulta: {{ result.query }}</h3>
+            <p>Respuesta: {{ result.response }}</p>
             <p>Consumo de Energía: {{ result.energy_consumption }} kWh</p>
             <p>Emisiones de GHG: {{ result.ghg_emissions }} kgCO2eq</p>
 

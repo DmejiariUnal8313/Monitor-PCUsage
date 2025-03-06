@@ -65,23 +65,32 @@ def ecologits_integration(request):
     EcoLogits.init()
     api_key = os.getenv("OPENAI_API_KEY")
 
+    # Verificar si la clave API se ha cargado correctamente
+    if not api_key:
+        return HttpResponse("Error: No se ha proporcionado una clave API válida.", status=500)
+
     # Inicializar la lista de resultados en la sesión si no existe
     if 'results' not in request.session:
         request.session['results'] = []
 
     if request.method == "POST":
-        query = request.POST.get("query")
-        response = perform_query(api_key, "gpt-4o-mini", [{"role": "user", "content": query}])
-        result = {
-            "query": query,
-            "energy_consumption": f"{response.impacts.energy.value:.6f}",
-            "ghg_emissions": f"{response.impacts.gwp.value:.6f}",
-            "warnings": [str(w) for w in response.impacts.warnings] if response.impacts.has_warnings else [],
-            "errors": [str(e) for e in response.impacts.errors] if response.impacts.has_errors else [],
-        }
-        # Añadir el nuevo resultado a la lista de resultados en la sesión
-        request.session['results'].append(result)
-        request.session.modified = True
+        if 'clear' in request.POST:
+            # Limpiar los resultados anteriores
+            request.session['results'] = []
+        else:
+            query = request.POST.get("query")
+            response = perform_query(api_key, "gpt-4o-mini", [{"role": "user", "content": query}])
+            result = {
+                "query": query,
+                "response": response.choices[0].message.content,
+                "energy_consumption": f"{response.impacts.energy.value:.6f} kWh",
+                "ghg_emissions": f"{response.impacts.gwp.value:.6f} kgCO2eq",
+                "warnings": [str(w) for w in response.impacts.warnings] if response.impacts.has_warnings else [],
+                "errors": [str(e) for e in response.impacts.errors] if response.impacts.has_errors else [],
+            }
+            # Añadir el nuevo resultado a la lista de resultados en la sesión
+            request.session['results'].append(result)
+            request.session.modified = True
 
     context = {
         'results': request.session['results']
