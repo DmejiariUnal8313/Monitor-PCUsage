@@ -13,6 +13,6 @@ urlpatterns = [
     path("about/", views.about, name="about"),
     path("log/", views.log_message, name="log"),
     path("monitor/", views.monitor, name="monitor"),
-
+    path('ecologits-integration/', views.ecologits_integration, name='ecologits_integration'),
 ]
 

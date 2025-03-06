@@ -1,0 +1,40 @@
+{% extends "hello/layout.html" %}
+{% block title %}
+    Integración de Ecologits
+{% endblock %}
+{% block content %}
+    <h2>Integración de Ecologits AI y OpenAI</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="query">Escribe tu consulta:</label>
+        <input type="text" id="query" name="query" required>
+        <button type="submit">Enviar</button>
+    </form>
+
+    {% if results %}
+        {% for result in results %}
+            <h3>Consulta: {{ result.query }}</h3>
+            <p>Consumo de Energía: {{ result.energy_consumption }} kWh</p>
+            <p>Emisiones de GHG: {{ result.ghg_emissions }} kgCO2eq</p>
+
+            {% if result.warnings %}
+                <h4>Advertencias</h4>
+                <ul>
+                {% for warning in result.warnings %}
+                    <li>{{ warning }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if result.errors %}
+                <h4>Errores</h4>
+                <ul>
+                {% for error in result.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            <hr/>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

@@ -1,5 +1,7 @@
 import psutil
 import time
+# Importa Ecologits AI
+import ecologits
 
 class MonitoringService:
     def get_cpu_usage(self):
@@ -10,8 +12,12 @@ class MonitoringService:
         return memory_info.percent
 
     def get_energy_usage(self):
-        # Simulación de uso de energía
-        return 50  # Valor simulado
+        try:
+            # Intenta utilizar Ecologits AI para obtener el uso de energía
+            return ecologits.get_energy_usage()
+        except AttributeError:
+            # Si la función no existe, devuelve un valor simulado
+            return 50  # Valor simulado
 
     def analyze_usage(self, duration=60, interval=5):
         start_time = time.time()  # Registrar el tiempo de inicio
